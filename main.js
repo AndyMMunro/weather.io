@@ -32,6 +32,16 @@ $(document).ready(function () {
         }).then(function (resp1) {
             console.log(resp1)
 
+            var head5 = $(".card-body")
+            var forecastDate = $("<h5>").text(resp1.list[0].dt_txt);
+            var humidity = $("<h5>").text(resp1.list[0].main.humidity);
+            var clouds = $("<h5>").text(resp1.list[0].weather[0].description);
+            var temp = $("<h5>").text(parseInt(tempCalc));
+            // temp conversion from K to F
+            var tempCalc = (parseInt(resp1.list[0].main.temp) - 273) * 1.8 + 32;
+
+            // console.log(forcastDate);
+            head5.append(forecastDate, humidity, clouds, temp)
 
         });
 

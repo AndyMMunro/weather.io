@@ -1,6 +1,32 @@
 
 $(document).ready(function () {
 
+    // $(document).ready(function () {
+
+    //     var settings = {
+    //         "async": true,
+    //         "crossDomain": true,
+    //         "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/GBP/en-GB/?query=Stockholm",
+    //         "method": "GET",
+    //         "headers": {
+    //             "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+    //             "x-rapidapi-key": "db13f0fa34msh3f267b9d5c647dap1d912bjsn17cd5582b5c0"
+    //         }
+    //     }
+
+    //     $.ajax(settings).done(function (response) {
+    //         console.log(response);
+
+    //         var head5 = $(".card-body-1")
+    //         var placeName = $("<h5>").text(response.Places[0].CityId);
+
+
+    //         // console.log(location);pi
+    //         head5.append(head5)
+
+
+    //     });
+    // });
 
     $(".searchBtn").on("click", function (event) {
         // Preventing the buttons default behavior when clicked (which is submitting a form)
@@ -15,6 +41,7 @@ $(document).ready(function () {
         // url: "http://api.openweathermap.org/data/2.5/uvi?appid=548213dc11f704275b9979eff9e7e8cc&lat=" + lat + "&lon=" + lon,
 
         // UV index API key 
+        url: https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&cnt=1&appid=${key},
         // var queryURL1 = "api.openweathermap.org/data/2.5/uvi?q=" + lat + lon + "&APPID=79e878a8b6f5bfce841612e4037403ac"
 
         // UV index API call variables 
@@ -32,13 +59,93 @@ $(document).ready(function () {
         }).then(function (resp1) {
             console.log(resp1)
 
-            var head5 = $(".card-body")
+            var head5 = $(".card-body-1")
             var forecastDate = $("<h5>").text(resp1.list[0].dt_txt);
             var humidity = $("<h5>").text(resp1.list[0].main.humidity);
             var clouds = $("<h5>").text(resp1.list[0].weather[0].description);
-            var temp = $("<h5>").text(parseInt(tempCalc));
+            var temp = $("<h5>").text(parseInt(tempCalcFore));
             // temp conversion from K to F
-            var tempCalc = (parseInt(resp1.list[0].main.temp) - 273) * 1.8 + 32;
+            var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
+
+            // console.log(forcastDate);
+            head5.append(forecastDate, humidity, clouds, temp)
+
+        });
+
+        $.ajax({
+            url: queryForcastURL,
+            method: "GET"
+
+        }).then(function (resp1) {
+            console.log(resp1)
+
+            var head5 = $(".card-body-2")
+            var forecastDate = $("<h5>").text(resp1.list[6].dt_txt);
+            var humidity = $("<h5>").text(resp1.list[6].main.humidity);
+            var clouds = $("<h5>").text(resp1.list[6].weather[0].description);
+            var temp = $("<h5>").text(parseInt(tempCalcFore));
+            // temp conversion from K to F
+            var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
+
+            // console.log(forcastDate);
+            head5.append(forecastDate, humidity, clouds, temp)
+
+        });
+
+        $.ajax({
+            url: queryForcastURL,
+            method: "GET"
+
+        }).then(function (resp1) {
+            console.log(resp1)
+
+            var head5 = $(".card-body-3")
+            var forecastDate = $("<h5>").text(resp1.list[16].dt_txt);
+            var humidity = $("<h5>").text(resp1.list[16].main.humidity);
+            var clouds = $("<h5>").text(resp1.list[16].weather[0].description);
+            var temp = $("<h5>").text(parseInt(tempCalcFore));
+            // temp conversion from K to F
+            var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
+
+            // console.log(forcastDate);
+            head5.append(forecastDate, humidity, clouds, temp)
+
+        });
+
+        $.ajax({
+            url: queryForcastURL,
+            method: "GET"
+
+        }).then(function (resp1) {
+            console.log(resp1)
+
+            var head5 = $(".card-body-4")
+            var forecastDate = $("<h5>").text(resp1.list[26].dt_txt);
+            var humidity = $("<h5>").text(resp1.list[26].main.humidity);
+            var clouds = $("<h5>").text(resp1.list[26].weather[0].description);
+            var temp = $("<h5>").text(parseInt(tempCalcFore));
+            // temp conversion from K to F
+            var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
+
+            // console.log(forecastDate);
+            head5.append(forecastDate, humidity, clouds, temp)
+
+        });
+
+        $.ajax({
+            url: queryForcastURL,
+            method: "GET"
+
+        }).then(function (resp1) {
+            console.log(resp1)
+
+            var head5 = $(".card-body-5")
+            var forecastDate = $("<h5>").text(resp1.list[36].dt_txt);
+            var humidity = $("<h5>").text(resp1.list[36].main.humidity);
+            var clouds = $("<h5>").text(resp1.list[36].weather[0].description);
+            var temp = $("<h5>").text(parseInt(tempCalcFore));
+            // temp conversion from K to F
+            var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
 
             // console.log(forcastDate);
             head5.append(forecastDate, humidity, clouds, temp)
@@ -76,6 +183,7 @@ $(document).ready(function () {
             $("tbody").append(tRow);
             $(".display-4").append(resp.name)
 
+
         });
 
 
@@ -91,13 +199,8 @@ $(document).ready(function () {
         }
 
 
-        // /        var tempLocation = JSON.parse(localStorage.getItem("location"))
-        //         tempLocation.push(city)
 
-        //         localStorage.setItem("location", JSON.stringify(tempLocation))
-
-
-        //         return location;
+        // return location;
 
 
     });
@@ -106,6 +209,7 @@ $(document).ready(function () {
         // $(".city-search-text").empty();
         $(".city-search-text").val('');
         $(".display-4").empty();
+        $(".card-body").empty();
     }
 
     function searchHistBtnRend(city) {
@@ -122,6 +226,11 @@ $(document).ready(function () {
         // appending button to div 
         searchHistBtnLoc.append(button);
 
+
+        var tempLocation = JSON.parse(localStorage.getItem("location"))
+        tempLocation.push(city)
+
+        localStorage.setItem("location", JSON.stringify(city))
 
     }
 

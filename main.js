@@ -7,20 +7,30 @@ $(document).ready(function () {
         event.preventDefault();
         // This line grabs the input from the textbox
         var city = $(".city-search-text").val().trim();
+        // city = "portland";
         // this sets variable location to city variable of the input 
         var location = city;
         // this changes the location variable to city var in the .then function 
         location = city;
 
-        // url: "http://api.openweathermap.org/data/2.5/uvi?appid=548213dc11f704275b9979eff9e7e8cc&lat=" + lat + "&lon=" + lon,
+        function uvIndex(lat, lon) {
+            // console.log(lat, lon);
+            var queryUvURL = `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&cnt=1&APPID=79e878a8b6f5bfce841612e4037403ac`
 
-        // UV index API key 
-        url: https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&cnt=1&appid=${key},
-        // var queryURL1 = "api.openweathermap.org/data/2.5/uvi?q=" + lat + lon + "&APPID=79e878a8b6f5bfce841612e4037403ac"
+            $.ajax({
+                url: queryUvURL,
+                method: "GET"
 
-        // UV index API call variables 
-        // var lat = $(resp1.cord.lat)
-        // var lon = $(resp1.cord.lon)
+            }).then(function (resp3) {
+
+                console.log(resp3);
+
+                var uV = $("<td>").text(resp3.value);
+
+                $(".data-rows").append(uV)
+            });
+        }
+
 
 
         // forecast call
@@ -33,6 +43,7 @@ $(document).ready(function () {
         }).then(function (resp1) {
             console.log(resp1)
 
+
             var head5 = $(".card-body-1")
             var location = $("<h5>").text(resp1.city.name);
             var forecastDate = $("<h5>").text(resp1.list[0].dt_txt);
@@ -42,8 +53,12 @@ $(document).ready(function () {
             // temp conversion from K to F
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
 
-            // console.log(forcastDate);
+            // console.log(lat, lon);
             head5.append(location, forecastDate, humidity, clouds, temp)
+
+
+
+
 
         });
 
@@ -52,7 +67,7 @@ $(document).ready(function () {
             method: "GET"
 
         }).then(function (resp1) {
-            console.log(resp1)
+            // console.log(resp1)
 
             var head5 = $(".card-body-2")
             var location = $("<h5>").text(resp1.city.name);
@@ -74,7 +89,7 @@ $(document).ready(function () {
             method: "GET"
 
         }).then(function (resp1) {
-            console.log(resp1)
+            // console.log(resp1)
 
             var head5 = $(".card-body-3")
             var location = $("<h5>").text(resp1.city.name);
@@ -87,6 +102,7 @@ $(document).ready(function () {
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
 
             // console.log(forcastDate);
+
             head5.append(location, forecastDate, humidity, clouds, temp)
 
         });
@@ -96,7 +112,7 @@ $(document).ready(function () {
             method: "GET"
 
         }).then(function (resp1) {
-            console.log(resp1)
+            // console.log(resp1)
 
             var head5 = $(".card-body-4")
             var location = $("<h5>").text(resp1.city.name);
@@ -118,7 +134,7 @@ $(document).ready(function () {
             method: "GET"
 
         }).then(function (resp1) {
-            console.log(resp1)
+            // console.log(resp1)
 
             var head5 = $(".card-body-5")
             var location = $("<h5>").text(resp1.city.name);
@@ -135,10 +151,7 @@ $(document).ready(function () {
 
         });
 
-
-
-
-        // temp wind humdity API call
+        // for current weather temp wind humdity API call
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&APPID=79e878a8b6f5bfce841612e4037403ac"
         $.ajax({
             url: queryURL,
@@ -148,14 +161,17 @@ $(document).ready(function () {
         }).then(function (resp) {
             console.log(resp);
             // Create a new table row element
-            var tRow = $("<tr>");
+            var tRow = $("<tr>").addClass("data-rows");
             // This is why we can create and save a reference to a td in the same statement we update its text
             var tempCalc = ((resp.main.temp) - 273) * 1.8 + 32;
+
             // temp conversion from K to F
 
             var fTemp = $("<td>").text(parseInt(tempCalc))
 
             // console.log(fTemp)
+            var lat = resp.coord.lat
+            var lon = resp.coord.lon
             var location = $("<td>").text(resp.name);
 
             var humidityTd = $("<td>").text(resp.main.humidity);
@@ -164,12 +180,17 @@ $(document).ready(function () {
 
             // Append the newly created table data to the table row
             tRow.append(location, fTemp, humidityTd, windSpeedTd, windDegTd);
+
             // Append the table row to the table body
             $("tbody").append(tRow);
             $(".display-4").append(resp.name)
-
+            uvIndex(lat, lon)
 
         });
+
+
+
+
 
 
 
@@ -212,10 +233,10 @@ $(document).ready(function () {
         searchHistBtnLoc.append(button);
 
 
-        var tempLocation = JSON.parse(localStorage.getItem("location"))
-        tempLocation.push(city)
+        // var tempLocation = JSON.parse(localStorage.getItem("location"))
+        // tempLocation.push(city)
 
-        localStorage.setItem("location", JSON.stringify(city))
+        // localStorage.setItem("location", JSON.stringify(city))
 
     }
 

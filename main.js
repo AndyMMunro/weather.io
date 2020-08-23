@@ -1,32 +1,6 @@
 
 $(document).ready(function () {
 
-    // $(document).ready(function () {
-
-    //     var settings = {
-    //         "async": true,
-    //         "crossDomain": true,
-    //         "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/GBP/en-GB/?query=Stockholm",
-    //         "method": "GET",
-    //         "headers": {
-    //             "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-    //             "x-rapidapi-key": "db13f0fa34msh3f267b9d5c647dap1d912bjsn17cd5582b5c0"
-    //         }
-    //     }
-
-    //     $.ajax(settings).done(function (response) {
-    //         console.log(response);
-
-    //         var head5 = $(".card-body-1")
-    //         var placeName = $("<h5>").text(response.Places[0].CityId);
-
-
-    //         // console.log(location);pi
-    //         head5.append(head5)
-
-
-    //     });
-    // });
 
     $(".searchBtn").on("click", function (event) {
         // Preventing the buttons default behavior when clicked (which is submitting a form)
@@ -60,6 +34,7 @@ $(document).ready(function () {
             console.log(resp1)
 
             var head5 = $(".card-body-1")
+            var location = $("<h5>").text(resp1.city.name);
             var forecastDate = $("<h5>").text(resp1.list[0].dt_txt);
             var humidity = $("<h5>").text(resp1.list[0].main.humidity);
             var clouds = $("<h5>").text(resp1.list[0].weather[0].description);
@@ -68,7 +43,7 @@ $(document).ready(function () {
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
 
             // console.log(forcastDate);
-            head5.append(forecastDate, humidity, clouds, temp)
+            head5.append(location, forecastDate, humidity, clouds, temp)
 
         });
 
@@ -80,6 +55,8 @@ $(document).ready(function () {
             console.log(resp1)
 
             var head5 = $(".card-body-2")
+            var location = $("<h5>").text(resp1.city.name);
+
             var forecastDate = $("<h5>").text(resp1.list[6].dt_txt);
             var humidity = $("<h5>").text(resp1.list[6].main.humidity);
             var clouds = $("<h5>").text(resp1.list[6].weather[0].description);
@@ -88,7 +65,7 @@ $(document).ready(function () {
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
 
             // console.log(forcastDate);
-            head5.append(forecastDate, humidity, clouds, temp)
+            head5.append(location, forecastDate, humidity, clouds, temp)
 
         });
 
@@ -100,6 +77,8 @@ $(document).ready(function () {
             console.log(resp1)
 
             var head5 = $(".card-body-3")
+            var location = $("<h5>").text(resp1.city.name);
+
             var forecastDate = $("<h5>").text(resp1.list[16].dt_txt);
             var humidity = $("<h5>").text(resp1.list[16].main.humidity);
             var clouds = $("<h5>").text(resp1.list[16].weather[0].description);
@@ -108,7 +87,7 @@ $(document).ready(function () {
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
 
             // console.log(forcastDate);
-            head5.append(forecastDate, humidity, clouds, temp)
+            head5.append(location, forecastDate, humidity, clouds, temp)
 
         });
 
@@ -120,6 +99,8 @@ $(document).ready(function () {
             console.log(resp1)
 
             var head5 = $(".card-body-4")
+            var location = $("<h5>").text(resp1.city.name);
+
             var forecastDate = $("<h5>").text(resp1.list[26].dt_txt);
             var humidity = $("<h5>").text(resp1.list[26].main.humidity);
             var clouds = $("<h5>").text(resp1.list[26].weather[0].description);
@@ -128,7 +109,7 @@ $(document).ready(function () {
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
 
             // console.log(forecastDate);
-            head5.append(forecastDate, humidity, clouds, temp)
+            head5.append(location, forecastDate, humidity, clouds, temp)
 
         });
 
@@ -140,6 +121,8 @@ $(document).ready(function () {
             console.log(resp1)
 
             var head5 = $(".card-body-5")
+            var location = $("<h5>").text(resp1.city.name);
+
             var forecastDate = $("<h5>").text(resp1.list[36].dt_txt);
             var humidity = $("<h5>").text(resp1.list[36].main.humidity);
             var clouds = $("<h5>").text(resp1.list[36].weather[0].description);
@@ -148,7 +131,7 @@ $(document).ready(function () {
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
 
             // console.log(forcastDate);
-            head5.append(forecastDate, humidity, clouds, temp)
+            head5.append(location, forecastDate, humidity, clouds, temp)
 
         });
 
@@ -173,12 +156,14 @@ $(document).ready(function () {
             var fTemp = $("<td>").text(parseInt(tempCalc))
 
             // console.log(fTemp)
+            var location = $("<td>").text(resp.name);
+
             var humidityTd = $("<td>").text(resp.main.humidity);
             var windSpeedTd = $("<td>").text(resp.wind.speed);
             var windDegTd = $("<td>").text(resp.wind.deg);
 
             // Append the newly created table data to the table row
-            tRow.append(fTemp, humidityTd, windSpeedTd, windDegTd);
+            tRow.append(location, fTemp, humidityTd, windSpeedTd, windDegTd);
             // Append the table row to the table body
             $("tbody").append(tRow);
             $(".display-4").append(resp.name)

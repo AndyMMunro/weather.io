@@ -56,10 +56,6 @@ $(document).ready(function () {
             // console.log(lat, lon);
             head5.append(location, forecastDate, humidity, clouds, temp)
 
-
-
-
-
         });
 
         $.ajax({

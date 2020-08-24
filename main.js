@@ -29,15 +29,15 @@ $(document).ready(function () {
         }
 
         // forecast call
-        var queryForcastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&APPID=79e878a8b6f5bfce841612e4037403ac"
-
+        // var queryForcastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&APPID=79e878a8b6f5bfce841612e4037403ac"
+        var queryForcastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&APPID=79e878a8b6f5bfce841612e4037403ac"
 
         $.ajax({
             url: queryForcastURL,
             method: "GET"
 
         }).then(function (resp1) {
-            // console.log(resp1)
+            console.log(resp1)
 
             var head5 = $(".card-body-1")
             var location = $("<h5>").text(resp1.city.name);
@@ -157,7 +157,7 @@ $(document).ready(function () {
         // $(".city-search-text").empty();
         $(".city-search-text").val('');
         $(".display-4").empty();
-        $(".card-body").empty();
+        $(".card-body-1").empty();
     }
 
     function searchHistBtnRend(city) {

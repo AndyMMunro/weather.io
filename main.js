@@ -31,13 +31,13 @@ $(document).ready(function () {
         // forecast call
         var queryForcastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&APPID=79e878a8b6f5bfce841612e4037403ac"
 
+
         $.ajax({
             url: queryForcastURL,
             method: "GET"
 
         }).then(function (resp1) {
             // console.log(resp1)
-
 
             var head5 = $(".card-body-1")
             var location = $("<h5>").text(resp1.city.name);
@@ -51,14 +51,6 @@ $(document).ready(function () {
             // console.log(lat, lon);
             head5.append(location, forecastDate, humidity, clouds, temp)
 
-        });
-
-        $.ajax({
-            url: queryForcastURL,
-            method: "GET"
-
-        }).then(function (resp1) {
-            // console.log(resp1)
 
             var head5 = $(".card-body-2")
             var location = $("<h5>").text(resp1.city.name);
@@ -73,15 +65,6 @@ $(document).ready(function () {
             // console.log(forcastDate);
             head5.append(location, forecastDate, humidity, clouds, temp)
 
-        });
-
-        $.ajax({
-            url: queryForcastURL,
-            method: "GET"
-
-        }).then(function (resp1) {
-            // console.log(resp1)
-
             var head5 = $(".card-body-3")
             var location = $("<h5>").text(resp1.city.name);
 
@@ -90,20 +73,8 @@ $(document).ready(function () {
             var clouds = $("<h5>").text(resp1.list[16].weather[0].description);
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
             var temp = $("<h5>").text(parseInt(tempCalcFore));
-            // temp conversion from K to F
-
-            // console.log(forcastDate);
 
             head5.append(location, forecastDate, humidity, clouds, temp)
-
-        });
-
-        $.ajax({
-            url: queryForcastURL,
-            method: "GET"
-
-        }).then(function (resp1) {
-            // console.log(resp1)
 
             var head5 = $(".card-body-4")
             var location = $("<h5>").text(resp1.city.name);
@@ -117,15 +88,6 @@ $(document).ready(function () {
 
             // console.log(forecastDate);
             head5.append(location, forecastDate, humidity, clouds, temp)
-
-        });
-
-        $.ajax({
-            url: queryForcastURL,
-            method: "GET"
-
-        }).then(function (resp1) {
-            // console.log(resp1)
 
             var head5 = $(".card-body-5")
             var location = $("<h5>").text(resp1.city.name);
@@ -142,6 +104,7 @@ $(document).ready(function () {
             head5.append(location, forecastDate, humidity, clouds, temp)
 
         });
+
 
         // for current weather temp wind humdity API call
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&APPID=79e878a8b6f5bfce841612e4037403ac"
@@ -228,7 +191,6 @@ $(document).ready(function () {
         }
         else {
             locationStorage.push(city);
-
             localStorage.setItem("location", JSON.stringify(locationStorage))
         }
 

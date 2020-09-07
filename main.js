@@ -1,43 +1,118 @@
 
 $(document).ready(function () {
 
-    var city;
-    var citySearchLocation = [];
+    // This line grabs the input from the text box in the HTML
+    // var cityInput = $(".city-search-text").val().trim();
+    // this sets variable cityInput to city variable of the input 
+    // var city = cityInput;
+    // this sets the local storage variable
+
+
+    let history = JSON.parse(window.localStorage.getItem("city"));
+    if (history == null) {
+        history = []
+    }
+    // this runs the localStorage though the button propigation
+    for (let i = 0; i < history.length; i++) {
+        searchHistBtnRend(history[i]);
+    }
+    // console.log(history);
+
+    // this changes the location variable to city var in the .then function 
 
     $(".searchBtn").on("click", function (event) {
-        // Preventing the buttons default behavior when clicked (which is submitting a form)
+        // Preventing the buttons default behavior when clicked 
+        // (which is submitting a form)
         event.preventDefault();
-        // This line grabs the input from the textbox
-        city = $(".city-search-text").val().trim();
-        // this sets variable location to city variable of the input 
-        var location = city;
-        // this changes the location variable to city var in the .then function 
-        location = city;
 
-        // uv index call and post
-        function uvIndex(lat, lon) {
-            // console.log(lat, lon);
-            var queryUvURL = `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&cnt=1&APPID=79e878a8b6f5bfce841612e4037403ac`
-            $.ajax({
-                url: queryUvURL,
-                method: "GET"
-            }).then(function (resp3) {
-                // console.log(resp3);
-                var uV = $("<td>").text(resp3.value);
-                $(".data-rows").append(uV)
-            });
-        }
+        // if (city !== '') {
+        // searchHistBtnRend(city);
+        // }
+        var cityInput = $(".city-search-text").val().trim();
 
-        // forecast call
-        // var queryForcastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&APPID=79e878a8b6f5bfce841612e4037403ac"
-        var queryForcastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&APPID=79e878a8b6f5bfce841612e4037403ac"
+        searchHistBtnRend(cityInput);
+
+        currentWeather(cityInput);
+
+        forecast(cityInput);
+
+        clear()
+
+    });
+
+    // for current weather temp wind humdity API call
+
+    function currentWeather(city) {
+
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=79e878a8b6f5bfce841612e4037403ac"
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+
+            // Performing GET requests
+        }).then(function (resp) {
+
+            // console.log(city, "looking for me");
+
+            if (history.indexOf(city) == -1) {
+                history.push(city)
+                window.localStorage.setItem("city", JSON.stringify(history))
+            }
+
+            // console.log(resp);
+            // Create a new table row element
+            var tRow = $("<tr>").addClass("data-rows");
+            // This is why we can create and save a reference to a td in the same statement we update its text
+            var tempCalc = ((resp.main.temp) - 273) * 1.8 + 32;
+
+            // temp conversion from K to F
+
+            var fTemp = $("<td>").text(parseInt(tempCalc))
+
+            // console.log(fTemp)
+            var lat = resp.coord.lat
+            var lon = resp.coord.lon
+            var location = $("<td>").text(resp.name);
+            var humidityTd = $("<td>").text(resp.main.humidity);
+            var windSpeedTd = $("<td>").text(resp.wind.speed);
+            var windDegTd = $("<td>").text(resp.wind.deg);
+
+            // Append the newly created table data to the table row
+            tRow.append(location, fTemp, humidityTd, windSpeedTd, windDegTd);
+
+            // Append the table row to the table body
+            $("tbody").append(tRow);
+            $(".display-4").append(resp.name)
+
+            uvIndex(lat, lon)
+
+        });
+    }
+    // uv index call and post
+    function uvIndex(lat, lon) {
+        // console.log(lat, lon);
+        var queryUvURL = `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&cnt=1&APPID=79e878a8b6f5bfce841612e4037403ac`
+        $.ajax({
+            url: queryUvURL,
+            method: "GET"
+        }).then(function (resp3) {
+            // console.log(resp3);
+            var uV = $("<td>").text(resp3.value);
+            $(".data-rows").append(uV)
+        });
+    }
+    // forecast call
+    function forecast(city) {
+
+        var queryForcastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=79e878a8b6f5bfce841612e4037403ac"
 
         $.ajax({
             url: queryForcastURL,
             method: "GET"
 
         }).then(function (resp1) {
-            console.log(resp1)
+            // console.log(resp1)
 
             var head5 = $(".card-body-1")
             var location = $("<h5>").text(resp1.city.name);
@@ -104,65 +179,23 @@ $(document).ready(function () {
             head5.append(location, forecastDate, humidity, clouds, temp)
 
         });
-
-
-        // for current weather temp wind humdity API call
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&APPID=79e878a8b6f5bfce841612e4037403ac"
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-
-            // Performing GET requests
-        }).then(function (resp) {
-            // console.log(resp);
-            // Create a new table row element
-            var tRow = $("<tr>").addClass("data-rows");
-            // This is why we can create and save a reference to a td in the same statement we update its text
-            var tempCalc = ((resp.main.temp) - 273) * 1.8 + 32;
-
-            // temp conversion from K to F
-
-            var fTemp = $("<td>").text(parseInt(tempCalc))
-
-            // console.log(fTemp)
-            var lat = resp.coord.lat
-            var lon = resp.coord.lon
-            var location = $("<td>").text(resp.name);
-            var humidityTd = $("<td>").text(resp.main.humidity);
-            var windSpeedTd = $("<td>").text(resp.wind.speed);
-            var windDegTd = $("<td>").text(resp.wind.deg);
-
-            // Append the newly created table data to the table row
-            tRow.append(location, fTemp, humidityTd, windSpeedTd, windDegTd);
-
-            // Append the table row to the table body
-            $("tbody").append(tRow);
-            $(".display-4").append(resp.name)
-            uvIndex(lat, lon)
-
-        });
-
-        clear();
-        // console.log(citySearchText);
-        var citySearchText = $(".city-search-text")
-        // console.log(location);
-        if (city !== '') {
-            searchHistBtnRend(city);
-        }
-        // return location;
-        setStorage();
-    });
-
+    };
+    // clear fields function
     function clear() {
         // $(".city-search-text").empty();
         $(".city-search-text").val('');
         $(".display-4").empty();
+        $("tbody").empty();
         $(".card-body-1").empty();
+        $(".card-body-2").empty();
+        $(".card-body-3").empty();
+        $(".card-body-4").empty();
+        $(".card-body-5").empty();
+
     }
-
+    // create buttons function 
     function searchHistBtnRend(city) {
-
-
+        console.log(city);
         // grabbing button propigation location 
         var searchHistBtnLoc = $(".search-hist");
         // creating button element  
@@ -171,48 +204,24 @@ $(document).ready(function () {
         // creating text to be displayed on button 
         button.text(city);
         // appending button to div 
-        searchHistBtnLoc.append(button);
+        searchHistBtnLoc.prepend(button);
+        // return button.text(city);
+        console.log(button.text(city));
+    };
 
-    }
+    $(".prevSerHistBtn").on("click", function (event) {
+        // console.log(prevSerHistBtn.innerText);
+        // console.log("button is being clicked");
 
-    // $(".prevSerHistBtn").on("click", function (event) {
+        let cityHist = $(this).text();
+        // console.log(cityHist);
 
-    //     location = button.text(localStorage);
+        currentWeather(cityHist);
+        forecast(cityHist);
+    })
 
-    // });
-
-    function setStorage() {
-        let locationStorage = JSON.parse(localStorage.getItem("location"));
-
-        console.log(city);
-        if (locationStorage == null) {
-            let temp = [city];
-            localStorage.setItem("location", temp)
-        }
-        else {
-            locationStorage.push(city);
-            localStorage.setItem("location", JSON.stringify(locationStorage))
-        }
-
-    }
-
-
-    function getStorage() {
-
-        let locationStorage = JSON.parse(localStorage.getItem("location"))
-        $(locationStorage).each(function (idx, el) {
-
-            searchHistBtnRend(locationStorage[idx]);
-
-        })
-
-
-
-    }
-
-    getStorage();
-
-    // console.log(searchHistBtnRend())
 
 });
+
+
 

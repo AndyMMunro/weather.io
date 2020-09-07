@@ -1,3 +1,11 @@
 .container div {
     border: 1px solid green
 }
+
+.prevSerHistBtn {
+    width: 100%;
+}
+
+.searchBtn {
+    width: 100%;
+}

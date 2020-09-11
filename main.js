@@ -112,7 +112,7 @@ $(document).ready(function () {
             method: "GET"
 
         }).then(function (resp1) {
-            // console.log(resp1)
+            console.log(resp1)
 
             var head5 = $(".card-body-1")
             var location = $("<h5>").text(resp1.city.name);
@@ -130,9 +130,9 @@ $(document).ready(function () {
             var head5 = $(".card-body-2")
             var location = $("<h5>").text(resp1.city.name);
 
-            var forecastDate = $("<h5>").text(resp1.list[6].dt_txt);
-            var humidity = $("<h5>").text(resp1.list[6].main.humidity);
-            var clouds = $("<h5>").text(resp1.list[6].weather[0].description);
+            var forecastDate = $("<h5>").text(resp1.list[8].dt_txt);
+            var humidity = $("<h5>").text(resp1.list[8].main.humidity);
+            var clouds = $("<h5>").text(resp1.list[8].weather[0].description);
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
             var temp = $("<h5>").text(parseInt(tempCalcFore));
             // temp conversion from K to F
@@ -154,9 +154,9 @@ $(document).ready(function () {
             var head5 = $(".card-body-4")
             var location = $("<h5>").text(resp1.city.name);
 
-            var forecastDate = $("<h5>").text(resp1.list[26].dt_txt);
-            var humidity = $("<h5>").text(resp1.list[26].main.humidity);
-            var clouds = $("<h5>").text(resp1.list[26].weather[0].description);
+            var forecastDate = $("<h5>").text(resp1.list[24].dt_txt);
+            var humidity = $("<h5>").text(resp1.list[24].main.humidity);
+            var clouds = $("<h5>").text(resp1.list[24].weather[0].description);
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
             var temp = $("<h5>").text(parseInt(tempCalcFore));
             // temp conversion from K to F
@@ -167,9 +167,9 @@ $(document).ready(function () {
             var head5 = $(".card-body-5")
             var location = $("<h5>").text(resp1.city.name);
 
-            var forecastDate = $("<h5>").text(resp1.list[36].dt_txt);
-            var humidity = $("<h5>").text(resp1.list[36].main.humidity);
-            var clouds = $("<h5>").text(resp1.list[36].weather[0].description);
+            var forecastDate = $("<h5>").text(resp1.list[32].dt_txt);
+            var humidity = $("<h5>").text(resp1.list[32].main.humidity);
+            var clouds = $("<h5>").text(resp1.list[32].weather[0].description);
             // temp conversion from K to F
             var tempCalcFore = ((resp1.list[0].main.temp) - 273) * 1.8 + 32;
 
@@ -206,7 +206,7 @@ $(document).ready(function () {
         // appending button to div 
         searchHistBtnLoc.prepend(button);
         // return button.text(city);
-        console.log(button.text(city));
+        // console.log(button.text(city));
     };
 
     $(".prevSerHistBtn").on("click", function (event) {
@@ -218,6 +218,7 @@ $(document).ready(function () {
 
         currentWeather(cityHist);
         forecast(cityHist);
+        clear();
     })
 
 

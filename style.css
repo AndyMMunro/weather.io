@@ -4,8 +4,18 @@
 
 .prevSerHistBtn {
     width: 100%;
+    text-align: left;
 }
 
 .searchBtn {
+    width: 100%;
+
+}
+
+.card-body {
+    background-color: blue;
+}
+
+.city-search-text {
     width: 100%;
 }

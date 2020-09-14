@@ -1,13 +1,7 @@
 
 $(document).ready(function () {
 
-    // This line grabs the input from the text box in the HTML
-    // var cityInput = $(".city-search-text").val().trim();
-    // this sets variable cityInput to city variable of the input 
-    // var city = cityInput;
-    // this sets the local storage variable
-
-
+    // local storage call for buttons
     let history = JSON.parse(window.localStorage.getItem("city"));
     if (history == null) {
         history = []
